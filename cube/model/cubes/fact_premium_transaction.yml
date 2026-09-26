@@ -1,0 +1,59 @@
+cubes:
+  - name: fact_premium_transaction
+    sql_table: main.fact_premium_transaction
+    title: Premium Transactions
+    description: One row per premium payment or adjustment.
+
+    joins:
+      - name: dim_policy
+        sql: "{CUBE}.policy_id = {dim_policy.policy_id}"
+        relationship: many_to_one
+
+    dimensions:
+      - name: transaction_id
+        sql: transaction_id
+        type: number
+        primary_key: true
+
+      - name: transaction_date
+        sql: transaction_date
+        type: time
+        title: Transaction Date
+
+      - name: transaction_type
+        sql: transaction_type
+        type: string
+        title: Transaction Type
+        description: Premium Payment or Adjustment.
+
+      - name: transaction_status
+        sql: transaction_status
+        type: string
+        title: Transaction Status
+
+      - name: policy_id
+        sql: policy_id
+        type: number
+        public: false
+
+    measures:
+      - name: transaction_count
+        type: count
+        title: Number of Transactions
+
+      - name: total_transaction_amount
+        sql: transaction_amount
+        type: sum
+        format: currency
+        title: Net Transaction Amount
+        description: All completed transactions, including adjustments.
+
+      - name: total_premium_collected
+        sql: transaction_amount
+        type: sum
+        format: currency
+        title: Premium Collected
+        description: Completed premium payments only, excluding adjustments.
+        filters:
+          - sql: "{CUBE}.transaction_type = 'Premium Payment'"
+          - sql: "{CUBE}.transaction_status = 'Completed'"

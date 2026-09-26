@@ -1,0 +1,16 @@
+name: insurance_analytics
+version: '1.0.0'
+profile: insurance_analytics
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+
+vars:
+  as_of_date: '2023-05-31'   # fixed reporting date so results are reproducible
+
+models:
+  insurance_analytics:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

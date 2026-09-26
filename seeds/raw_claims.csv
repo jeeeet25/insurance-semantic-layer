@@ -1,0 +1,13 @@
+claim_id,policy_id,claim_number,claim_date,claim_category,claim_amount,claim_status,settlement_date,settlement_amount,days_to_settlement
+1,1,CLM-001,2021-03-10,Collision,5000,Settled,2021-04-15,4500.0,36.0
+2,1,CLM-002,2022-01-05,Property,8000,Settled,2022-02-20,7500.0,46.0
+3,2,CLM-003,2021-06-12,Property,12000,Settled,2021-07-30,11000.0,48.0
+4,3,CLM-004,2019-05-20,Collision,3500,Settled,2019-06-15,3200.0,26.0
+5,4,CLM-005,2020-08-10,Mortality,500000,Settled,2020-10-05,500000.0,56.0
+6,5,CLM-006,2022-02-14,Collision,4000,Settled,2022-03-25,3800.0,39.0
+7,6,CLM-007,2020-11-30,Property,15000,Open,,,
+8,7,CLM-008,2021-09-05,Collision,6000,Settled,2021-10-20,5500.0,45.0
+9,1,CLM-009,2023-01-15,Collision,6000,Settled,2023-02-28,5500.0,44.0
+10,2,CLM-010,2022-06-10,Property,20000,Settled,2022-07-25,18500.0,45.0
+11,3,CLM-011,2023-03-05,Collision,5500,Denied,2023-03-20,0.0,15.0
+12,8,CLM-012,2023-02-28,Collision,7000,Settled,2023-03-31,6500.0,31.0

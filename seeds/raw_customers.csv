@@ -1,0 +1,7 @@
+customer_id,customer_name,state,age,customer_segment
+1,Alice Johnson,CA,45,High Value
+2,Bob Smith,NY,52,Standard
+3,Carol White,TX,38,Emerging
+4,David Brown,FL,61,High Value
+5,Emma Davis,CA,29,Emerging
+6,Frank Miller,NY,55,High Value

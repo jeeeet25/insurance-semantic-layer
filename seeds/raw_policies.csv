@@ -1,0 +1,9 @@
+policy_id,customer_id,policy_number,policy_type,coverage_amount,annual_premium,policy_start_date,policy_status
+1,1,POL-001-AUTO,Auto,250000,1200,2018-03-15,Active
+2,1,POL-001-HOME,Home,500000,1800,2018-03-15,Active
+3,2,POL-002-AUTO,Auto,250000,1400,2019-06-20,Active
+4,3,POL-003-AUTO,Auto,200000,900,2020-01-10,Lapsed
+5,4,POL-004-LIFE,Life,1000000,600,2018-11-05,Active
+6,5,POL-005-AUTO,Auto,200000,850,2021-02-14,Active
+7,6,POL-006-AUTO,Auto,300000,1500,2017-09-30,Active
+8,4,POL-004-HOME,Home,600000,2200,2018-11-05,Active

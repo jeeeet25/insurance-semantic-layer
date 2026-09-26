@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_policies
+    columns:
+      - name: policy_id
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: policy_status
+        data_tests:
+          - accepted_values:
+              values: ['Active', 'Lapsed']
+
+  - name: stg_claims
+    columns:
+      - name: claim_id
+        data_tests:
+          - unique
+          - not_null
+      - name: policy_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_policies')
+              field: policy_id
+      - name: claim_status
+        data_tests:
+          - accepted_values:
+              values: ['Settled', 'Open', 'Denied']
+
+  - name: stg_transactions
+    columns:
+      - name: transaction_id
+        data_tests:
+          - unique
+          - not_null
+      - name: policy_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_policies')
+              field: policy_id

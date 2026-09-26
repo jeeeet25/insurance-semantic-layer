@@ -1,0 +1,16 @@
+transaction_id,policy_id,transaction_date,transaction_type,transaction_amount,transaction_status
+1,1,2023-03-15,Premium Payment,1200,Completed
+2,1,2023-04-15,Premium Payment,1200,Completed
+3,2,2023-03-15,Premium Payment,1800,Completed
+4,3,2023-03-20,Premium Payment,1400,Completed
+5,4,2023-03-15,Premium Payment,600,Completed
+6,5,2023-03-15,Premium Payment,850,Completed
+7,6,2023-03-15,Premium Payment,1500,Completed
+8,7,2023-03-18,Premium Payment,1100,Completed
+9,8,2023-03-15,Premium Payment,2200,Completed
+10,1,2023-05-15,Premium Payment,1200,Completed
+11,2,2023-05-15,Premium Payment,1800,Completed
+12,3,2023-05-15,Premium Payment,1400,Completed
+13,5,2023-05-15,Premium Payment,850,Completed
+14,6,2023-05-20,Adjustment,-100,Completed
+15,8,2023-05-15,Premium Payment,2200,Completed

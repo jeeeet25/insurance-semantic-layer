@@ -1,0 +1,79 @@
+cubes:
+  - name: fact_claims
+    sql_table: main.fact_claims
+    title: Claims
+    description: One row per insurance claim.
+
+    joins:
+      - name: dim_policy
+        sql: "{CUBE}.policy_id = {dim_policy.policy_id}"
+        relationship: many_to_one
+
+    dimensions:
+      - name: claim_id
+        sql: claim_id
+        type: number
+        primary_key: true
+
+      - name: claim_number
+        sql: claim_number
+        type: string
+        title: Claim Number
+
+      - name: claim_category
+        sql: claim_category
+        type: string
+        title: Claim Category
+        description: Type of loss - Collision, Property or Mortality.
+
+      - name: claim_status
+        sql: claim_status
+        type: string
+        title: Claim Status
+        description: Settled, Open or Denied.
+
+      - name: claim_date
+        sql: claim_date
+        type: time
+        title: Claim Date
+
+      - name: settlement_date
+        sql: settlement_date
+        type: time
+        title: Settlement Date
+
+      - name: policy_id
+        sql: policy_id
+        type: number
+        public: false
+
+    measures:
+      - name: claim_count
+        type: count
+        title: Number of Claims
+
+      - name: total_incurred_losses
+        sql: incurred_amount
+        type: sum
+        format: currency
+        title: Incurred Losses
+        description: Settled claims at settlement amount, open claims at claimed amount, denied claims at zero.
+
+      - name: total_claimed_amount
+        sql: claim_amount
+        type: sum
+        format: currency
+        title: Amount Claimed
+        description: Total amount customers claimed, before settlement.
+
+      - name: avg_days_to_settlement
+        sql: days_to_settlement
+        type: avg
+        title: Average Days to Settlement
+        description: Average days from claim to settlement, for settled claims only. Open and denied claims are excluded.
+
+      - name: loss_ratio
+        sql: "1.0 * {total_incurred_losses} / NULLIF({dim_policy.total_earned_premium}, 0)"
+        type: number
+        title: Loss Ratio
+        description: Incurred losses divided by earned premium, inception-to-date as of 2023-05-31. Above 1.0 means losses exceed premium.

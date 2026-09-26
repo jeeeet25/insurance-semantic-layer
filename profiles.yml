@@ -1,0 +1,7 @@
+insurance_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: insurance.duckdb
+      threads: 4

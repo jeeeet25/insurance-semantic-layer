@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: dim_customer
+    columns:
+      - name: customer_id
+        data_tests:
+          - unique
+          - not_null
+      - name: age_band
+        data_tests:
+          - accepted_values:
+              values: ['Under 35', '35-49', '50+']
+
+  - name: dim_policy
+    columns:
+      - name: policy_id
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_id
+      - name: policy_status
+        data_tests:
+          - accepted_values:
+              values: ['Active', 'Lapsed']
+
+  - name: fact_claims
+    columns:
+      - name: claim_id
+        data_tests:
+          - unique
+          - not_null
+      - name: policy_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_policy')
+              field: policy_id
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_id
+      - name: claim_status
+        data_tests:
+          - accepted_values:
+              values: ['Settled', 'Open', 'Denied']
+      - name: incurred_amount
+        data_tests:
+          - not_null
+
+  - name: fact_premium_transaction
+    columns:
+      - name: transaction_id
+        data_tests:
+          - unique
+          - not_null
+      - name: policy_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_policy')
+              field: policy_id
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_id

@@ -1,0 +1,78 @@
+cubes:
+  - name: dim_policy
+    sql_table: main.dim_policy
+    title: Policies
+    description: One row per insurance policy. Earned premium is calculated as of 2023-05-31.
+
+    joins:
+      - name: dim_customer
+        sql: "{CUBE}.customer_id = {dim_customer.customer_id}"
+        relationship: many_to_one
+
+    dimensions:
+      - name: policy_id
+        sql: policy_id
+        type: number
+        primary_key: true
+
+      - name: policy_number
+        sql: policy_number
+        type: string
+        title: Policy Number
+
+      - name: policy_type
+        sql: policy_type
+        type: string
+        title: Policy Type
+        description: Line of business - Auto, Home or Life.
+
+      - name: policy_status
+        sql: policy_status
+        type: string
+        title: Policy Status
+        description: Active or Lapsed.
+
+      - name: is_active
+        sql: is_active
+        type: boolean
+        title: Is Active
+
+      - name: policy_start_date
+        sql: policy_start_date
+        type: time
+        title: Policy Start Date
+
+      - name: coverage_amount
+        sql: coverage_amount
+        type: number
+        title: Coverage Amount
+
+      - name: customer_id
+        sql: customer_id
+        type: number
+        public: false
+
+    measures:
+      - name: policy_count
+        type: count
+        title: Number of Policies
+
+      - name: active_policy_count
+        type: count
+        title: Active Policies
+        description: Policies with status Active. Uses the is_active flag defined in dbt.
+        filters:
+          - sql: "{CUBE}.is_active = true"
+
+      - name: total_earned_premium
+        sql: earned_premium
+        type: sum
+        format: currency
+        title: Earned Premium
+        description: Premium earned from policy start to 2023-05-31 (or last payment date for lapsed policies).
+
+      - name: total_annual_premium
+        sql: annual_premium
+        type: sum
+        format: currency
+        title: Annual Premium

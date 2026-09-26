@@ -1,0 +1,43 @@
+cubes:
+  - name: dim_customer
+    sql_table: main.dim_customer
+    title: Customers
+    description: One row per customer.
+
+    dimensions:
+      - name: customer_id
+        sql: customer_id
+        type: number
+        primary_key: true
+
+      - name: customer_name
+        sql: customer_name
+        type: string
+        public: false
+
+      - name: state
+        sql: state
+        type: string
+        title: State
+
+      - name: age_band
+        sql: age_band
+        type: string
+        title: Age Band
+        description: Under 35, 35-49, or 50+.
+
+      - name: customer_segment
+        sql: customer_segment
+        type: string
+        title: Customer Segment
+        description: High Value, Standard, or Emerging.
+
+    measures:
+      - name: customer_count
+        type: count
+        title: Number of Customers
+
+      - name: avg_age
+        sql: age
+        type: avg
+        title: Average Customer Age
