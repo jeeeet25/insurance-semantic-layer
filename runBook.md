@@ -56,7 +56,7 @@ docker compose -f cube/docker-compose.yml logs cube --since 2m    # recent Cube 
 docker compose -f cube/docker-compose.yml up -d --force-recreate  # full Cube restart
 ```
 
-## After the presentation
+## stop the cube once done
 
 ```bash
 docker compose -f cube/docker-compose.yml stop
