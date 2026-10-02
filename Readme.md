@@ -8,6 +8,18 @@ A self-service semantic layer over fake insurance data. Analysts can answer unde
 
 **Stack:** dbt-duckdb (staging → marts), DuckDB (warehouse), Cube (semantic layer and API).
 
+## Contents
+
+- [0. Quick start](#quick-start)
+- [1. Data profile](#1-data-profile)
+- [2. Data gaps](#2-data-gaps)
+- [3. Assumptions](#3-assumptions)
+- [4. Flowchart](#4-flowchart)
+- [5. Data contract](#5-data-contract)
+- [6. Data quality tests](#6-data-quality-tests)
+- [7. Sample queries](#7-sample-queries)
+- [8. Frontend integrations](#8-frontend-integrations)
+
 ## Quick start
 
 ```bash
@@ -162,4 +174,57 @@ All joins are `many_to_one` toward the dimensions. Cube deduplicates measures by
 | Singular | `assert_claims_within_coverage` | claim amount ≤ coverage | warn (returns claim 5) |
 
 **Why warn and not error:** these are real anomalies in the source data. They should be surfaced for review, not block the pipeline.
+
+
+## 7. Sample queries
+
+**Follow** this link for quick demonstration on cube.js
+
+***https://drive.google.com/file/d/1AYi2xP-T_YnuRhrAbdjiJl-ZMckBN6AE/view?usp=drive_link***
+
+**1.What is our loss ratio by policy type?**
+![Alt text](screenshots/loss_ratio_by_policy_type.png)
+
+**2. How many active policies do we have, by policy type?**
+
+Note: Cube.js generates query for you based on the measures selected, enabling self-serve analytics for non-technical stakeholders.
+
+![Alt text](screenshots/active_policy_by_policy_type.png)
+
+**3. What is the average time to settlement, by claim category?**
+![Alt text](screenshots/avg_time_to_settle_by_claim_category.png)
+
+**4. How many claims, and how much in claims, come from each customer segment?**
+![Alt text](screenshots/claims_by_cust_segment.png)
+
+**5. How much premium did we collect each month?**
+![Alt text](screenshots/premium_collected_month_wise.png)
+
+
+## 8. Frontend Integrations
+
+Cube exposes every metric defined in the semantic layer through REST, GraphQL, and a Postgres-compatible SQL API. Any frontend or BI tool (React apps, Metabase, Power BI, Tableau) therefore pulls the same governed definitions, and nobody has to rewrite metric logic. Below, a loss ratio query is consumed from a JavaScript client.
+
+![Alt text](screenshots/frontend_integrations.png)
+
+### Steps to integrate
+
+
+1. **Start Cube** in the project folder with `npm run dev`. The API is served at `http://localhost:4000/cubejs-api/v1`.
+2. **Get an API token.** In dev mode, copy it from the Playground (*Frontend Integrations* tab), or sign a JWT with your `CUBEJS_API_SECRET`.
+3. **Install the client** in your frontend app:
+   `npm install @cubejs-client/core`
+4. **Query a metric:**
+```js
+   import cube from '@cubejs-client/core';
+
+   const api = cube('YOUR_TOKEN', { apiUrl: 'http://localhost:4000/cubejs-api/v1' });
+
+   const result = await api.load({
+     measures: ['policies.loss_ratio'],
+     dimensions: ['policies.policy_type'],
+   });
+   console.log(result.tablePivot());
+```
+5. **Connect a BI tool** with the SQL API: point Metabase, Power BI, or Tableau at `localhost:15432` as a Postgres source. This requires `CUBEJS_PG_SQL_PORT=15432` in `.env`.
 

@@ -1,6 +1,6 @@
 services:
   cube:
-    image: cubejs/cube:v1.7.46
+    image: cubejs/cube:latest
     ports:
       - "4000:4000"
     env_file: .env

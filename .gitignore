@@ -7,3 +7,4 @@ dbt_packages/
 .user.yml
 .DS_Store
 cube/.cubestore/
+InterviewPrep.md
